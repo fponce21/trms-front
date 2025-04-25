@@ -1,0 +1,96 @@
+<div class="container">
+    <mat-card class="card">
+      <!-- Tabs -->
+      <mat-tab-group (selectedTabChange)="toggleMode()" [selectedIndex]="isLoginMode() ? 0 : 1">
+        <mat-tab label="Login"></mat-tab>
+        <mat-tab label="Register"></mat-tab>
+      </mat-tab-group>
+  
+      <!-- Error Message -->
+      <div *ngIf="errorMessage()" class="error">
+        {{ errorMessage() }}
+      </div>
+  
+      <!-- Form -->
+      <form (ngSubmit)="onSubmit()" class="form">
+        <!-- Login Form -->
+        <div *ngIf="isLoginMode()">
+          <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <input
+              matInput
+              [(ngModel)]="loginData.username"
+              name="loginUsername"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              type="password"
+              [(ngModel)]="loginData.password"
+              name="loginPassword"
+              required
+            />
+          </mat-form-field>
+        </div>
+  
+        <!-- Register Form -->
+        <div *ngIf="!isLoginMode()">
+          <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <input
+              matInput
+              [(ngModel)]="registerData.username"
+              name="registerUsername"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              type="password"
+              [(ngModel)]="registerData.password"
+              name="registerPassword"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              [(ngModel)]="registerData.email"
+              name="registerEmail"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Role</mat-label>
+            <mat-select
+              [(ngModel)]="registerData.role"
+              name="registerRole"
+              required
+            >
+              <mat-option value="EMPLOYEE">Employee</mat-option>
+              <mat-option value="MANAGER">Manager</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+  
+        <!-- Submit Button -->
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="isLoading()"
+          class="submit-btn"
+        >
+          <mat-spinner *ngIf="isLoading()" diameter="20" class="spinner"></mat-spinner>
+          {{ isLoginMode() ? 'Login' : 'Register' }}
+        </button>
+      </form>
+    </mat-card>
+  </div>
